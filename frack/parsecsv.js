@@ -2,6 +2,7 @@ var fs = require('fs');
 var csv = require('csv-streamify');
 var through = require('through');
 var path = require('path');
+var _ = require('lodash');
 
 var get_relevant_files = function(pathname, cb) {
     fs.readdir(pathname, function (err, files) {
@@ -21,13 +22,14 @@ var parse_csv = function(pathname) {
                 parser.header = clean_column(parser.read());
             } else {
                 var line = parser.read();
-                gen_line_obj(line, parser);
+                return gen_line_obj(line, parser);
             }
 
         });
     fs
         .createReadStream(pathname)
         .pipe(parser)
+        .pipe(fs.createWriteStream('output.js'));
 
 };
 
@@ -56,7 +58,8 @@ var gen_line_obj = function(line, parser) {
         }
 
     });
-    console.log(objs);
+
+
 };
 
 var clean_column = function(column) {
@@ -75,12 +78,13 @@ var clean_column = function(column) {
 var clean_category = function(category) {
     return category.split("/")[1].split(".")[0];
 }
-//get_relevant_files('data', function(list) {
-//    list.forEach(function(file) {
-//        var pathname = path.join('data', file);
-//        parse_csv(pathname);
-//    });
-//});
-//
-parse_csv(path.join('data', 'communication.csv'))
+get_relevant_files('data', function(list) {
+    list.forEach(function(file) {
+        var pathname = path.join('data', file);
+        parse_csv(pathname);
+    });
+
+});
+
+//parse_csv(path.join('data', 'communication.csv'))
 
