@@ -1,0 +1,23 @@
+body {
+    background: rgba(0,0,0,0.9);
+    color: rgba(255,255,255,0.6);
+    font-size: 17px;
+    font-family: Consolas, 'Courier New', Courier, monospace;
+    width: 80%;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+
+.filter {
+    padding: 15px 0;
+    clear: both;
+}
+.filter__label {
+    float: left;
+    width: 140px;
+}
+.filter__select {
+    width: 60%;
+    max-width: 350px;
+}
