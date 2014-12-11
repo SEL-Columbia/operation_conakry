@@ -14,7 +14,6 @@ var get_relevant_files = function(pathname, cb) {
 
 var parse_csv = function(pathname) {
     var dummy = {};
-    objs = [];
     var existsSubaction = false;
     var parser = csv({objectMode: true});
     parser
@@ -27,12 +26,10 @@ var parse_csv = function(pathname) {
                         return;
                     }
 
-                    objs.push({'region': region, 'idx': idx});
                 });
             } else {
                 var line = parser.read();
                 objs.map(function(obj, idx) {
-                    obj[line[0]] = line[obj.idx];
                 });
 
             }
