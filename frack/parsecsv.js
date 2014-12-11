@@ -19,6 +19,7 @@ var parse_csv = function(pathname) {
             if (this.lineNo === 0) {
                 parser.header = clean_column(parser.read());
             } else {
+                console.log(parser.header);
                 var line = parser.read();
                 var action = line[0];
             }
@@ -29,6 +30,15 @@ var parse_csv = function(pathname) {
 };
 
 var clean_column = function(column) {
+    var fr_dict = {"á":"a", "á":"a", "ç":"c", "é":"e"};
+    return column.map(function(name) {
+        return name.replace(/\s$/, '', 'g')
+                   .replace(/\*$/, '', 'g')
+                   .replace(/[^\w ]/g, function(char) {
+                         return fr_dict[char] || char;
+                   });
+
+    });
 };
 
 // run 
