@@ -26,11 +26,11 @@ var parse_csv = function(pathname) {
         });
     fs
         .createReadStream(pathname)
-        .pipe(parser)
+        .pipe(parser);
 };
 
 var clean_column = function(column) {
-    var fr_dict = {"á":"a", "á":"a", "ç":"c", "é":"e"};
+    var fr_dict = {"á":"a", "ç":"c", "é":"e", "è":"e"};
     return column.map(function(name) {
         return name.replace(/\s$/, '', 'g')
                    .replace(/\*$/, '', 'g')
