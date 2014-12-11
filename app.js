@@ -35,20 +35,28 @@ var data = [
 
 function getFilteredData() {
     var filters = {};
-    $('.select2-container')
-    .each(function() {
-        var key = $(this).data('key');
-        if (key) {
-            filters[key] = $(this).select2('val');
-        }
-    });
+    $('input.filter__select')
+        .each(function() {
+            var key = $(this).data('key');
+            if (key) {
+                filters[key] = $(this).select2('val');
+            }
+        });
     
+    console.log(filters);
+        
     return _.filter(data, function(item) {
+        var valid = true;
         for (var key in filters) {
-            if (item[key] != filters[key])
-                return false;
+            var values = filters[key];
+            var match = true;
+            _.each(values, function(value) {
+                if (item[key] != value)
+                    match = false;
+            });
+            if (!match) valid = false;
         }
-        return true;
+        return valid;
     });
 }
 
