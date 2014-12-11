@@ -26,12 +26,11 @@ var parse_csv = function(pathname) {
                         return;
                     }
 
+                    return;
                 });
             } else {
+                console.log(parser.header);
                 var line = parser.read();
-                objs.map(function(obj, idx) {
-                });
-
             }
 
         });
@@ -40,9 +39,16 @@ var parse_csv = function(pathname) {
         .pipe(parser)
 
 };
-
 var clean_column = function(column) {
-    return column;
+    var fr_dict = {"á":"a", "ç":"c", "é":"e", "è":"e"};
+    return column.map(function(name) {
+        return name.replace(/\s$/, '', 'g')
+                   .replace(/\*$/, '', 'g')
+                   .replace(/[^\w ]/g, function(char) {
+                         return fr_dict[char] || char;
+                   });
+
+    });
 };
 
 // run 
