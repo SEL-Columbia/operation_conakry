@@ -4,13 +4,18 @@ $('.filter__select')
         multiple: true,
         query: function(query) {
             // Gather results
+            
+            console.log(query)
             var data = getFilteredData();
             var results = [];
             var key = this.element.data('key');
             _.each(data, function(item) {
-                var value = item[key];
-                if (value) results.push(value);
+                var value = item[key] || '';
+                if (value && value.toLowerCase().indexOf(query.term) >= 0) {
+                    results.push(value);
+                }
             });
+            results.sort();
             results = _.map(_.uniq(results), function(value) {
                 return {id: value, text: value};
             });
