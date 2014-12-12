@@ -1,36 +1,36 @@
-var data = [
-    {
-        "region": "Beyla",
-        "category": "Communication",
-        "category2": "Campagne médiatique",
-        "value": "PNUD\nInternews: en collaboration avec\nla radio rurale de Beyla"
-    },
-    {
-        "region": "Boké",
-        "category": "Communication",
-        "category2": "Campagne médiatique",
-        "value": "PNUD: Publication dans les médias (émissions radios, télé, presse écrite, presse en ligne etc.) \nInternews: en collaboration avec la radio rurale de Boké"
-    },
-    {
-        "region": "Conakry",
-        "category": "Transport & diagnostiques",
-        "category2": "Financement/Fourniture",
-        "value": "UNICEF\nPRG\nBM (2 pick up)\nOMS (3 pick up)\nUNICEF (3 pick up)"
-    },
-    {
-        "region": "Beyla",
-        "category": "Transport & diagnostiques",
-        "category2": "Des laboratoires PCR avec une capacité suffisante d’accueil doivent être mis en place pour que tous les patients puissent être testés et obtenir leurs résultats le même jour.",
-        "value": "Planifié"
-    },
-    {
-        "region": "Beyla",
-        "category": "Surveillance & suivi",
-        "category2": "3. Investigation et Epidemiologie",
-        "category3": "Chauffeur d'investigation",
-        "value": "OMS/CDC"
-    }
-];
+//var data = [
+//    {
+//        "region": "Beyla",
+//        "category": "Communication",
+//        "category2": "Campagne médiatique",
+//        "value": "PNUD\nInternews: en collaboration avec\nla radio rurale de Beyla"
+//    },
+//    {
+//        "region": "Boké",
+//        "category": "Communication",
+//        "category2": "Campagne médiatique",
+//        "value": "PNUD: Publication dans les médias (émissions radios, télé, presse écrite, presse en ligne etc.) \nInternews: en collaboration avec la radio rurale de Boké"
+//    },
+//    {
+//        "region": "Conakry",
+//        "category": "Transport & diagnostiques",
+//        "category2": "Financement/Fourniture",
+//        "value": "UNICEF\nPRG\nBM (2 pick up)\nOMS (3 pick up)\nUNICEF (3 pick up)"
+//    },
+//    {
+//        "region": "Beyla",
+//        "category": "Transport & diagnostiques",
+//        "category2": "Des laboratoires PCR avec une capacité suffisante d’accueil doivent être mis en place pour que tous les patients puissent être testés et obtenir leurs résultats le même jour.",
+//        "value": "Planifié"
+//    },
+//    {
+//        "region": "Beyla",
+//        "category": "Surveillance & suivi",
+//        "category2": "3. Investigation et Epidemiologie",
+//        "category3": "Chauffeur d'investigation",
+//        "value": "OMS/CDC"
+//    }
+//];
 
 
 function getFilteredData() {

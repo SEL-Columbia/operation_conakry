@@ -29,7 +29,6 @@ var parse_csv = function(pathname) {
     fs
         .createReadStream(pathname)
         .pipe(parser)
-        .pipe(fs.createWriteStream('output.js'));
 
 };
 
@@ -55,6 +54,7 @@ var gen_line_obj = function(line, parser) {
 
         if (obj.value && obj.value !== '?') {
             objs.push(obj);
+            console.log(JSON.stringify(obj),',');
         }
 
     });
