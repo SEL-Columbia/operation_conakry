@@ -1,8 +1,8 @@
 var fs = require('fs');
 var csv = require('csv-streamify');
 var through = require('through');
+var JSONStream = require('JSONStream');
 var path = require('path');
-var _ = require('lodash');
 
 var get_relevant_files = function(pathname, cb) {
     fs.readdir(pathname, function (err, files) {
@@ -13,37 +13,43 @@ var get_relevant_files = function(pathname, cb) {
     });
 };
 
+global.ws = fs.createWriteStream('out.js');
+
 var parse_csv = function(pathname) {
     var parser = csv({objectMode: true});
-    parser.category = pathname;
+//    parser.category = pathname;
+    var self = this;
     parser
         .on('readable', function() {
             if (this.lineNo === 0) {
-                parser.header = clean_column(parser.read());
-            } else {
-                var line = parser.read();
-                return gen_line_obj(line, parser);
+                self.header = clean_column(parser.read());
             }
-
         });
     fs
         .createReadStream(pathname)
         .pipe(parser)
+        .pipe(through(function write(data) {
+            if (data !== self.header) {
+                gen_line_obj(data, self.header, pathname);
+            }
+        }, function end() {
+            this.queue(null);
+        }));
 
 };
 
-var gen_line_obj = function(line, parser) {
+var gen_line_obj = function(line, header, cat) {
     var action = line[0];
-    var noCat3 = parser.header[1] === "National";
+    var noCat3 = header[1] === "National";
 
     objs = [];
-    parser.header.forEach(function(region, idx) {
+    header.forEach(function(region, idx) {
         if (!region) 
             return;
 
         obj = {   
             region: region,
-            category: clean_category(parser.category),
+            category: clean_category(cat),
             category2: action,
             value: line[idx]
         };
@@ -53,8 +59,8 @@ var gen_line_obj = function(line, parser) {
         }
 
         if (obj.value && obj.value !== '?') {
-            objs.push(obj);
-            console.log(JSON.stringify(obj),',');
+            ws.write(JSON.stringify(obj));
+            ws.write(',');
         }
 
     });
@@ -77,8 +83,10 @@ var clean_column = function(column) {
 // run 
 var clean_category = function(category) {
     return category.split("/")[1].split(".")[0];
-}
+};
+
 get_relevant_files('data', function(list) {
+    ws.write('var data=[');
     list.forEach(function(file) {
         var pathname = path.join('data', file);
         parse_csv(pathname);
