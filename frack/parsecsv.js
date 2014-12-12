@@ -13,6 +13,8 @@ var get_relevant_files = function(pathname, cb) {
     });
 };
 
+global.ws = fs.createWriteStream('out.js');
+
 var parse_csv = function(pathname) {
     var parser = csv({objectMode: true});
 //    parser.category = pathname;
@@ -26,13 +28,15 @@ var parse_csv = function(pathname) {
     fs
         .createReadStream(pathname)
         .pipe(parser)
-        .pipe(through(function(data) {
+        .pipe(through(function write(data) {
             if (data !== self.header) {
                 gen_line_obj(this, data, self.header, pathname);
             }
+        }, function end() {
+            this.queue(null);
         }))
         .pipe(JSONStream.stringify())
-        .pipe(fs.createWriteStream('out.js'));
+        .pipe(ws);
 
 };
 
