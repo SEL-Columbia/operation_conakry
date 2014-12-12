@@ -61,13 +61,7 @@ function getFilteredData(skip) {
 function renderTable() {
     var data = getFilteredData();
     var filters = getFilters();
-    var headers = _.filter(
-        ['region', 'category', 'category2', 'category3', 'value'],
-        function(header) {
-            // Don't display headers which have been filtered
-            var values = filters[header];
-            return !(values && values.length);
-        });
+    var headers = ['region', 'category', 'category2', 'category3', 'value'];
     var html = '<table>';
     
     // Add headers
