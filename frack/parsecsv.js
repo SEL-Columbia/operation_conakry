@@ -30,17 +30,15 @@ var parse_csv = function(pathname) {
         .pipe(parser)
         .pipe(through(function write(data) {
             if (data !== self.header) {
-                gen_line_obj(this, data, self.header, pathname);
+                gen_line_obj(data, self.header, pathname);
             }
         }, function end() {
             this.queue(null);
-        }))
-        .pipe(JSONStream.stringify())
-        .pipe(ws);
+        }));
 
 };
 
-var gen_line_obj = function(th, line, header, cat) {
+var gen_line_obj = function(line, header, cat) {
     var action = line[0];
     var noCat3 = header[1] === "National";
 
@@ -61,7 +59,8 @@ var gen_line_obj = function(th, line, header, cat) {
         }
 
         if (obj.value && obj.value !== '?') {
-            th.queue(obj);
+            ws.write(JSON.stringify(obj));
+            ws.write(',');
         }
 
     });
@@ -87,6 +86,7 @@ var clean_category = function(category) {
 };
 
 get_relevant_files('data', function(list) {
+    ws.write('var data=[');
     list.forEach(function(file) {
         var pathname = path.join('data', file);
         parse_csv(pathname);
