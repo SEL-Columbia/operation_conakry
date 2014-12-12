@@ -4,21 +4,26 @@ $('.filter__select')
         multiple: true,
         query: function(query) {
             // Gather results
-            
-            console.log(query)
-            var data = getFilteredData();
-            var results = [];
             var key = this.element.data('key');
+            var data = getFilteredData(key);
+            var matches = [];
+            var others = [];
             _.each(data, function(item) {
                 var value = item[key] || '';
-                if (value && value.toLowerCase().indexOf(query.term) >= 0) {
-                    results.push(value);
+                if (value) {
+                    if (value.toLowerCase().indexOf(query.term) >= 0) {
+                        matches.push(value);
+                    } else {
+                        others.push(value);
+                    }
                 }
             });
-            results.sort();
+            matches.sort();
+            others.sort();
+            var results = matches.concat(others)
             results = _.map(_.uniq(results), function(value) {
-                return {id: value, text: value};
-            });
+                    return {id: value, text: value};
+                });
             query.callback({results: results});
         }
     })
@@ -38,8 +43,9 @@ function getFilters() {
 }
 
 
-function getFilteredData() {
+function getFilteredData(skip) {
     var filters = getFilters();
+    if (skip) delete filters[skip];
     return _.filter(data, function(item) {
         // Check to see that item contains filtered value
         for (var key in filters) {
