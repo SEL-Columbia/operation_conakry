@@ -1,39 +1,31 @@
-//var data = [
-//    {
-//        "region": "Beyla",
-//        "category": "Communication",
-//        "category2": "Campagne médiatique",
-//        "value": "PNUD\nInternews: en collaboration avec\nla radio rurale de Beyla"
-//    },
-//    {
-//        "region": "Boké",
-//        "category": "Communication",
-//        "category2": "Campagne médiatique",
-//        "value": "PNUD: Publication dans les médias (émissions radios, télé, presse écrite, presse en ligne etc.) \nInternews: en collaboration avec la radio rurale de Boké"
-//    },
-//    {
-//        "region": "Conakry",
-//        "category": "Transport & diagnostiques",
-//        "category2": "Financement/Fourniture",
-//        "value": "UNICEF\nPRG\nBM (2 pick up)\nOMS (3 pick up)\nUNICEF (3 pick up)"
-//    },
-//    {
-//        "region": "Beyla",
-//        "category": "Transport & diagnostiques",
-//        "category2": "Des laboratoires PCR avec une capacité suffisante d’accueil doivent être mis en place pour que tous les patients puissent être testés et obtenir leurs résultats le même jour.",
-//        "value": "Planifié"
-//    },
-//    {
-//        "region": "Beyla",
-//        "category": "Surveillance & suivi",
-//        "category2": "3. Investigation et Epidemiologie",
-//        "category3": "Chauffeur d'investigation",
-//        "value": "OMS/CDC"
-//    }
-//];
+// Initialize multi select
+$('.filter__select')
+    .select2({
+        multiple: true,
+        query: function(query) {
+            // Gather results
+            
+            console.log(query)
+            var data = getFilteredData();
+            var results = [];
+            var key = this.element.data('key');
+            _.each(data, function(item) {
+                var value = item[key] || '';
+                if (value && value.toLowerCase().indexOf(query.term) >= 0) {
+                    results.push(value);
+                }
+            });
+            results.sort();
+            results = _.map(_.uniq(results), function(value) {
+                return {id: value, text: value};
+            });
+            query.callback({results: results});
+        }
+    })
+    .on('change', renderTable);
 
 
-function getFilteredData() {
+function getFilters() {
     var filters = {};
     $('input.filter__select')
         .each(function() {
@@ -42,28 +34,34 @@ function getFilteredData() {
                 filters[key] = $(this).select2('val');
             }
         });
-    
-    console.log(filters);
-        
+    return filters;    
+}
+
+
+function getFilteredData() {
+    var filters = getFilters();
     return _.filter(data, function(item) {
-        var valid = true;
+        // Check to see that item contains filtered value
         for (var key in filters) {
             var values = filters[key];
-            var match = true;
-            _.each(values, function(value) {
-                if (item[key] != value)
-                    match = false;
-            });
-            if (!match) valid = false;
+            if (values.length && !_.contains(values, item[key]))
+                return false;
         }
-        return valid;
+        return true;
     });
 }
 
 
 function renderTable() {
     var data = getFilteredData();
-    var headers = ['region', 'category', 'category2', 'category3', 'value'];
+    var filters = getFilters();
+    var headers = _.filter(
+        ['region', 'category', 'category2', 'category3', 'value'],
+        function(header) {
+            // Don't display headers which have been filtered
+            var values = filters[header];
+            return !(values && values.length);
+        });
     var html = '<table>';
     
     // Add headers
@@ -91,26 +89,6 @@ function renderTable() {
 }
 
 
-// Initialize multi-select
-$('.filter__select')
-    .select2({
-        multiple: true,
-        query: function(query) {
-            // Gather results
-            var data = getFilteredData();
-            var results = [];
-            var key = this.element.data('key');
-            _.each(data, function(item) {
-                var value = item[key];
-                if (value) results.push(value);
-            });
-            results = _.map(_.uniq(results), function(value) {
-                return {id: value, text: value};
-            });            
-            query.callback({results: results});
-        }
-    })
-    .on('change', renderTable);
 
 
 
