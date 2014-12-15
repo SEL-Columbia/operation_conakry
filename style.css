@@ -28,8 +28,8 @@ body {
     border: none;
 }
 .select2-choices {
-    padding: 5px 10px !important;
-    background: rgba(0,0,0,0.2) !important;
+    padding: 5px !important;
+    background: rgba(0,0,0,0.3) !important;
     border: none !important;
     border-radius: 4px;
 }
@@ -55,6 +55,7 @@ body {
 }
 .table th {
     padding: 10px 0;
+    padding right: 20px;
     vertical-align: bottom;
 }
 .table td {
