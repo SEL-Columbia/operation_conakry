@@ -20,14 +20,17 @@ $('.filter__select')
             });
             matches.sort();
             others.sort();
-            var results = matches.concat(others)
+            var results = matches.concat(others);
             results = _.map(_.uniq(results), function(value) {
                     return {id: value, text: value};
                 });
             query.callback({results: results});
         }
     })
-    .on('change', renderTable);
+    .on('change', function() {
+        renderTable();
+        renderMap();
+    });
 
 
 function getFilters() {
@@ -81,15 +84,15 @@ function renderTable() {
         html += '</tr>';
     });
     html += '</tbody>';
-    html += '</table>'
+    html += '</table>';
     
     // Add to DOM
     $('.table table').remove();
     $('.table').append(html);
 }
 
+function renderMap() {
+    var regions = getFilters().region;
+    console.log(regions);
+}
 
-
-
-
-    

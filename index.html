@@ -12,7 +12,7 @@
 
 <body>
     <div class="filter">
-        <div class="filter__label">Region</div>
+        <div class="filter__label">Prefecture</div>
         <input type="hidden" class="filter__select js-region" data-key="region">
     </div>
     <div class="map js-region-map"></div>
@@ -28,11 +28,15 @@
         <div class="filter__label">Category 3</div>
         <input type="hidden" class="filter__select" data-key="category3">
     </div>
+
+    <div id="map">
     
     <div class="table">
         <div class="table__search"></div>
     </div>
     <script src="lib.js"></script>
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/dc.js"></script>
     <script src="data.js"></script>
     <script src="app.js"></script>
 </body>
