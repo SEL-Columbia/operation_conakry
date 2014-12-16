@@ -1,3 +1,4 @@
+L.Icon.Default.imagePath = 'leaflet/images/';
 // Initialize multi select
 $('.filter__select')
     .select2({
@@ -91,8 +92,62 @@ function renderTable() {
     $('.table').append(html);
 }
 
-function renderMap() {
+function initMap() {
     var regions = getFilters().region;
-    console.log(regions);
+    var map_div = 'map';
+    var map = new L.Map(map_div);
+    var osm_server = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+    var osm_layer = L.tileLayer(osm_server, {
+        attribution: "Open Street Map"
+    });
+    var style = function(feature) {
+        return {
+            fillColor: '#FEB24C',
+            weight: 2,
+            opacity: 1,
+            color: 'grey',
+            dashArray: '3',
+            fillOpacity: 0.3
+        };
+    };
+    var click_ev = function(ev) {
+        var name = ev.target.feature.properties.ADM2_NAME;
+        console.log(name);
+    };
+    var hightligt = function(ev) {
+        var layer = ev.target;
+        layer.setStyle({
+            weight: 5,
+            color: '#666',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+        // ie shame
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToFront();
+        }
+    };
+    var reset_style = function(ev) {
+        return geojson_layer.resetStyle(ev.target);
+    };
+    
+    var geojson_layer = L.geoJson(geojson, {
+        style: style,
+        onEachFeature: function(feature, layer) {
+            layer.on({
+                click: click_ev,
+                mouseover: hightligt,
+                mouseout: reset_style
+            });
+        }
+    });
+    geojson_layer.addTo(map);
+    osm_layer.addTo(map);
+    map.fitBounds(geojson_layer);
+}
+initMap();
+
+function renderMap() {
+    console.log('hello');
 }
 
