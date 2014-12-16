@@ -1,37 +1,45 @@
 L.Icon.Default.imagePath = 'leaflet/images/';
 // Initialize multi select
-$('.filter__select')
-    .select2({
-        multiple: true,
-        query: function(query) {
-            // Gather results
-            var key = this.element.data('key');
-            var data = getFilteredData(key);
-            var matches = [];
-            var others = [];
-            _.each(data, function(item) {
-                var value = item[key] || '';
-                if (value) {
-                    if (value.toLowerCase().indexOf(query.term) >= 0) {
-                        matches.push(value);
-                    } else {
-                        others.push(value);
-                    }
+var selection = {
+    multiple: true,
+    initSelection: function (element, callback) {
+        var arr = element.val().split(',');
+        var results = _.map(_.uniq(arr), function(value) {
+            return {id: value, text: value};
+        });
+        callback(results);
+    },
+    query: function(query) {
+        // Gather results
+        var key = this.element.data('key');
+        var data = getFilteredData(key);
+        var matches = [];
+        var others = [];
+        _.each(data, function(item) {
+            var value = item[key] || '';
+            if (value) {
+                if (value.toLowerCase().indexOf(query.term) >= 0) {
+                    matches.push(value);
+                } else {
+                    others.push(value);
                 }
-            });
-            matches.sort();
-            others.sort();
-            var results = matches.concat(others);
-            results = _.map(_.uniq(results), function(value) {
-                    return {id: value, text: value};
-                });
-            query.callback({results: results});
-        }
-    })
-    .on('change', function() {
-        renderTable();
-        renderMap();
-    });
+            }
+        });
+        matches.sort();
+        others.sort();
+        var results = matches.concat(others);
+        results = _.map(_.uniq(results), function(value) {
+            return {id: value, text: value};
+        });
+        query.callback({results: results});
+    }
+};
+$('.filter__select') 
+.select2(selection)
+.on('change', function() {
+    renderTable();
+    guinea_map.render();
+});
 
 
 function getFilters() {
@@ -67,14 +75,14 @@ function renderTable() {
     var filters = getFilters();
     var headers = ['region', 'category', 'category2', 'category3', 'value'];
     var html = '<table>';
-    
+
     // Add headers
     html += '<thead>';
     _.each(headers, function(header) {
         html += '<th>' + header + '</th>';
     });
     html += '</thead>';
-    
+
     // Add rows
     html += '<tbody>';
     _.each(data, function(item) {
@@ -86,14 +94,16 @@ function renderTable() {
     });
     html += '</tbody>';
     html += '</table>';
-    
+
     // Add to DOM
     $('.table table').remove();
     $('.table').append(html);
 }
 
-function initMap() {
+function Map() {
+    var self = this;
     var regions = getFilters().region;
+    this.current_select = regions || [];
     var map_div = 'map';
     var map = new L.Map(map_div);
     var osm_server = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
@@ -112,42 +122,68 @@ function initMap() {
     };
     var click_ev = function(ev) {
         var name = ev.target.feature.properties.ADM2_NAME;
-        console.log(name);
+        var idx = self.current_select.indexOf(name);
+        var input = $('input.js-region');
+        var val = input.select2('val');
+        if (val.indexOf(name) === -1) {
+            val.push(name);
+            input.select2('val', val, true);
+        }
+        if (idx > -1) {
+            self.current_select.splice(idx, 1);
+            return self.geojson_layer.resetStyle(ev.target);
+        } else {
+            self.current_select.push(name);
+        }
     };
-    var hightligt = function(ev) {
-        var layer = ev.target;
+
+    this.highlight = function(layer) {
         layer.setStyle({
             weight: 5,
             color: '#666',
             dashArray: '',
             fillOpacity: 0.7
         });
-        // ie shame
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
         }
     };
-    var reset_style = function(ev) {
-        return geojson_layer.resetStyle(ev.target);
+    this.reset_style = function(target) {
+        var name = target.feature.properties.ADM2_NAME;
+        if (self.current_select.indexOf(name) === -1) {
+            return self.geojson_layer.resetStyle(target);
+        }
     };
-    
-    var geojson_layer = L.geoJson(geojson, {
+
+
+    this.geojson_layer = L.geoJson(geojson, {
         style: style,
         onEachFeature: function(feature, layer) {
             layer.on({
                 click: click_ev,
-                mouseover: hightligt,
-                mouseout: reset_style
+                mouseover: function(ev) {self.highlight(ev.target);},
+                mouseout: function(ev) {self.reset_style(ev.target);}
             });
         }
     });
-    geojson_layer.addTo(map);
+    self.geojson_layer.addTo(map);
     osm_layer.addTo(map);
-    map.fitBounds(geojson_layer);
+    map.fitBounds(self.geojson_layer);
 }
-initMap();
 
-function renderMap() {
-    console.log('hello');
-}
+Map.prototype.render = function() {
+    var self = this;
+    this.current_select = getFilters().region;
+    console.log(this.current_select);
+    this.geojson_layer.eachLayer(function(layer) {
+        var name = layer.feature.properties.ADM2_NAME;
+        if (self.current_select.indexOf(name) > -1) {
+            self.highlight(layer);
+        } else {
+            self.reset_style(layer);
+        }
+    });
+};
+
+var guinea_map = new Map();
 
