@@ -127,8 +127,10 @@ function Map() {
         var val = input.select2('val');
         if (val.indexOf(name) === -1) {
             val.push(name);
-            input.select2('val', val, true);
+        } else {
+            val.splice(val.indexOf(name), 1);
         }
+        input.select2('val', val, true);
         if (idx > -1) {
             self.current_select.splice(idx, 1);
             return self.geojson_layer.resetStyle(ev.target);
