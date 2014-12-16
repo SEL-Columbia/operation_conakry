@@ -22,7 +22,6 @@ body {
     max-width: 350px;
 }
 
-
 .select2-drop {
     background: rgba(255,255,255,0.7);
     border: none;
@@ -44,11 +43,19 @@ body {
     top: 5px !important;
 }
 
+#map {
+    margin-left: 120px;
+    width: 60%;
+    max-width: 350px;
+    height: 290px;
+    margin-top; 20px;
+}
 
 .table {
     text-align: left;
     margin-top: 40px;
 }
+
 .table th {
     padding: 10px 0;
     padding right: 20px;
