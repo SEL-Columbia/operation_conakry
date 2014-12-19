@@ -34,12 +34,13 @@ var selection = {
         query.callback({results: results});
     }
 };
+
 $('.filter__select') 
-.select2(selection)
-.on('change', function() {
-    renderTable();
-    guinea_map.render();
-});
+    .select2(selection)
+    .on('change', function() {
+        renderTable();
+        guinea_map.render();
+    });
 
 
 function getFilters() {
@@ -138,7 +139,6 @@ function Map() {
             self.current_select.push(name);
         }
     };
-
     this.highlight = function(layer) {
         layer.setStyle({
             weight: 5,
@@ -156,8 +156,6 @@ function Map() {
             return self.geojson_layer.resetStyle(target);
         }
     };
-
-
     this.geojson_layer = L.geoJson(geojson, {
         style: style,
         onEachFeature: function(feature, layer) {
