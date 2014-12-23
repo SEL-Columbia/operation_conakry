@@ -75,12 +75,13 @@ function renderTable() {
     var data = getFilteredData();
     var filters = getFilters();
     var headers = ['region', 'category', 'category2', 'category3', 'value'];
+    var header_display = ['Préfecture', 'Catégorie', 'Sous-Catégorie', 'Action', 'valeur'];
     var html = '<table>';
 
     // Add headers
     html += '<thead>';
     _.each(headers, function(header) {
-        html += '<th>' + header + '</th>';
+        html += '<th>' + header_display[headers.indexOf(header)] + '</th>';
     });
     html += '</thead>';
 
