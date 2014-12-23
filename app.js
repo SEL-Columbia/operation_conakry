@@ -34,12 +34,13 @@ var selection = {
         query.callback({results: results});
     }
 };
+
 $('.filter__select') 
-.select2(selection)
-.on('change', function() {
-    renderTable();
-    guinea_map.render();
-});
+    .select2(selection)
+    .on('change', function() {
+        renderTable();
+        guinea_map.render();
+    });
 
 
 function getFilters() {
@@ -74,12 +75,13 @@ function renderTable() {
     var data = getFilteredData();
     var filters = getFilters();
     var headers = ['region', 'category', 'category2', 'category3', 'value'];
+    var header_display = ['Préfecture', 'Catégorie', 'Sous-Catégorie', 'Action', 'valeur'];
     var html = '<table>';
 
     // Add headers
     html += '<thead>';
     _.each(headers, function(header) {
-        html += '<th>' + header + '</th>';
+        html += '<th>' + header_display[headers.indexOf(header)] + '</th>';
     });
     html += '</thead>';
 
@@ -128,17 +130,10 @@ function Map() {
         if (val.indexOf(name) === -1) {
             val.push(name);
         } else {
-            val.splice(val.indexOf(name), 1);
+            val.splice(val.indexOf(name), 1); // removing if exists
         }
         input.select2('val', val, true);
-        if (idx > -1) {
-            self.current_select.splice(idx, 1);
-            return self.geojson_layer.resetStyle(ev.target);
-        } else {
-            self.current_select.push(name);
-        }
     };
-
     this.highlight = function(layer) {
         layer.setStyle({
             weight: 5,
@@ -156,8 +151,6 @@ function Map() {
             return self.geojson_layer.resetStyle(target);
         }
     };
-
-
     this.geojson_layer = L.geoJson(geojson, {
         style: style,
         onEachFeature: function(feature, layer) {
