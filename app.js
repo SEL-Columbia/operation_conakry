@@ -130,15 +130,9 @@ function Map() {
         if (val.indexOf(name) === -1) {
             val.push(name);
         } else {
-            val.splice(val.indexOf(name), 1);
+            val.splice(val.indexOf(name), 1); // removing if exists
         }
         input.select2('val', val, true);
-        if (idx > -1) {
-            self.current_select.splice(idx, 1);
-            return self.geojson_layer.resetStyle(ev.target);
-        } else {
-            self.current_select.push(name);
-        }
     };
     this.highlight = function(layer) {
         layer.setStyle({
