@@ -1,16 +1,38 @@
-,,National,Beyla,Boffa,Boké,Boke - Kamsar,Conakry,Conakry - Aeroport Militaire,Coyah,Dabola ,Dalaba,Dinguiraye,Dubréka ,Faranah*,Forecariah*,Fria,Gaoual,Guéckédou*,Kankan ,Kérouané ,Kindia*,Kissidougou,Koubia,Koundara,Kouroussa ,Labé,Lelouma,Lola,Macenta*,Mali ,Mamou* ,Mandiana,Nzérékoré* ,Pita ,Siguiri ,Télimélé,Tougue,Yomou*
-Centre de Traitement,Centre de Traitement,,50 lits,,,,100 lits,10 lits,100 lits,,,,,,,,,85 lits,,50 lits,,,,,,,,,50 lits,,100 lits France,,100 lits,,,,,50 lits
-Centre de Traitement,Financement,,France,,,,USAID,France,UN,,,,,,?,,,UE,,France,,,,,,,,,France,,?,,UE/ALIMA,,,,,?
-Centre de Traitement,Construction,,PAM,,,,?,France,PAM,,,,,,?,,,MSF,,PAM/France,,,,,,,,,France,,?,,OMS/PAM,,,,,PAM?
-Centre de Traitement,Recrutement,,?,,,,MSF,France,Cubains,,,,,,?,,,MSF,,France,,,,,,,,,Croix Rouge Francaise,,?,,ALIMA,,,,,?
-Centre de Traitement,Formation,,JHPIEGO,,,,-,France/MSF/CRS,"OMS for cold, and hot?/CRS",,,,,,?,,,MSF/CRS,,France/MSF/CRS,,,,,,,,,MSF/CRS,,?,,MSF/CRS,,,,,CRS
-Centre de Traitement,Equipement,,OMS?,,,,-,France/CRS,CRS,,,,,,?,,,MSF/CRS,,France/MSF/CRS,,,,,,,,,France/CRS,,?,,OMS/PAM/CRS,,,,,CRS
-Centre de Traitement,Date limite de finalisation de la construction,,15 Decembre,,,,30 Novembre,30 Novembre,18 Novembre,,,,,,31 Decembre,,,,,30 Novembre,,,,,,,,,18 Novembre,,31 Decembre,,25 Novembre,,,,,31 Decembre
-Centre de Transit ou Centre de Transit Communitaire,Centre de Transit ou Centre de Transit Communitaire,,,Plannifié,Plannifié,Plannifié,,,,Plannifié,Done,,Plannifié,Plannifié,Déjà executé,,,,Plannifié,,Plannifié,Plannifié,,,Plannifié,Plannifié,,Plannifié,,,,,,Plannifié,Plannifié,Plannifié,,
-Centre de Transit ou Centre de Transit Communitaire,Financement,,,UNICEF/PAM,UNICEF/PAM,UNICEF/PAM,,,,UNICEF/PAM,?,,UNICEF/PAM,UNICEF/PAM,France,,,,UNICEF/PAM,,UNICEF/PAM,UNICEF/PAM,,,UNICEF/PAM,UNICEF/PAM,,UNICEF/PAM,,,,,,UNICEF/PAM,UNICEF/PAM,UNICEF/PAM,,
-Centre de Transit ou Centre de Transit Communitaire,Construction,,,UNICEF/PAM,UNICEF/PAM,UNICEF/PAM,,,,UNICEF/PAM,?,,UNICEF/PAM,UNICEF/PAM,France,,,,UNICEF/PAM,,UNICEF/PAM,UNICEF/PAM,,,UNICEF/PAM,UNICEF/PAM,,UNICEF/PAM,,,,,,UNICEF/PAM,UNICEF/PAM,UNICEF/PAM,,
-Centre de transit communautaire,Centre de transit communautaire (41 postes frontaliers et 21 postes dans les sous-préfectures touchées le long des frontières et des Préfectures actives),,,,,,,,,,,,,6 Plannifié,5 Plannifié,,,8 Plannifié,,,1 Plannifié,,,,,,,6 Plannifié,6 Plannifié,,2 Plannifié,,2 Plannifié,,,,,6 Plannifié
-Centre de transit communautaire,Financement,,,,,,,,,,,,,Membres Nations Unies,Membres Nations Unies,,,Membres Nations Unies,,,Membres Nations Unies,,,,,,,Membres Nations Unies,Membres Nations Unies,,Membres Nations Unies,,Membres Nations Unies,,,,,Membres Nations Unies
-Centre de transit communautaire,Construction,,,,,,,,,,,,,UNICEF,UNICEF,,,UNICEF,,,UNICEF,,,,,,,UNICEF,UNICEF,,UNICEF,,UNICEF,,,,,UNICEF
-Centre de transit communautaire,Date limite de finalisation de la construction,,,,,,,,,,,,,15 Decembre,15 Decembre,,,15 Decembre,,15 Decembre,,,,,,,,15 Decembre,15 Decembre,,15 Decembre,,15 Decembre,,,,,15 Decembre
-Primes de risque,Primes de risque,,,,,,PNUD: Specialist en transfert de fonds,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,[S] Formation,[A] Financement,[A] Construction,Date limite,[S] Centre de Traitement,[A] Financement,[A] Construction,[A] Recrutement,[A] Formation,[A] Equipement,Date limite,[S] Approche d'Intervention Rapide / Centre de Transit / Centre de Transit Communitaire ,[A] Financement,[A] Construction,[A] Recrutement,[A] Formation,[A] Equipement,Date limite ,[S] Centre de transit communautaire (41 postes frontaliers et 21 postes dans les sous-préfectures touchées le long des frontières et des Préfectures actives),[A] Financement,[A] Construction,[A] Recrutement,[A] Formation,[A] Equipement,Date limite ,[S] Primes de risque,Date limite
+National,,,,,,,,,,,,,,,,OMS ,OMS,?,,,,,,,,,
+Beyla,,,,,50 lits,France,PAM,?,USAID/JHPIEGO (PI hopitaux et CS),OMS?,15 cecembre,,EU,,,,,,,,,,,,,,
+Boffa,,,,,,,,,,,, ,,,,,,,,,,,,,,,
+Boké,,,,,,,,,,,, ,,,,,,,,,,,,,,,
+Boke - Kamsar,,,,,,,,,,,, ,,,,,,,,,,,,,,,
+Conakry,Centre du Formation,France,Guinee,Fait,100 lits,MSF/divers bailleurs,MSF/PAM,MSF,MSF; USAID/JHPIEGO (PI aux hopitaux),MSF,16-Jan,,,,,,,,,,,,,,,,
+Conakry - Aeroport Militaire,,,,,10 lits,France,France,France,France/MSF/CRS,France/CRS,15-Jan,,,,,,,,,,,,,,,,
+Coyah,,,,,100 lits,UN,PAM,Cubains,OMS/CRS,CRS/OMS,31-Dec,,,,,,,,,,,,,,,,
+Dabola ,,,,,,,,,,,, ,,,,,,,,,,,,,,,
+Dalaba,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Dinguiraye,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Dubréka ,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Faranah*,,,,,,,,,,,,,,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Forecariah*,,,,,,France?,PAM?,?,USAID/JHPIEGO (PI hopitaux et CS); OMS,OMS,30 decembre,Déjà executé,France,France,Croix Rouge,MSF,France,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Fria,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Gaoual,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Guéckédou*,,,,,85 lits,MSF/divers bailleurs/EU,MSF,MSF,MSF/CRS,MSF/CRS,Fait,,,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Kankan ,,,,,20 lits,MSF,MSF,MSF,MSF,MSF,20 decembre,,MSF France,MSF France,MSF France,MSF France,MSF France,,,,,,,,,,
+Kérouané ,,,,,50 lits,France,PAM/France,France,France/MSF/CRS/OMS,France/MSF/CRS/OMS,31-Dec,,,,,,,,,,,,,,,,
+Kindia*,,,,,,,,,,,,,,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Kissidougou,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Koubia,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Koundara,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Kouroussa ,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Labé,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Lelouma,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Lola,,,,,,,,,,,,,EU,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Macenta*,,,,,50 lits,France,MSF/PAM,MSF/Croix Rouge Francaise,MSF/CRS,France/CRS/MSF,Fait,,,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Mali ,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Mamou* ,,,,,100 lits France,?,?,?,?,?,?,,,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Mandiana,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Nzérékoré* ,,,,,40 lits,ECHO,OMS/PAM,ALIMA,"MSF / ALIMA, CRS","PAM / ALIMA, CRS",Ouvert le 2 dec - 40 lits au 10/01/15,,EU,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
+Pita ,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Siguiri ,,,,,,,,,,,,,,,Save the Children (supporting general hospital to manage cases),,,,,,,,,,,,
+Télimélé,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Tougue,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Yomou*,,,,,50 lits,?,PAM?,?,CRS,CRS,31 decembre,,,,,,,,,Membres Nations Unies,UNICEF,?,?,?,,,
