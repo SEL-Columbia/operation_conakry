@@ -21,7 +21,7 @@ var parse_csv = function(pathname) {
     var self = this;
     parser
         .on('readable', function() {
-            if (this.lineNo === 0) {
+            if (this.lineNo === 0) { //title line
                 self.header = clean_column(parser.read());
             }
         });
