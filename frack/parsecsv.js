@@ -1,7 +1,6 @@
 var fs = require('fs');
 var csv = require('csv-streamify');
 var through = require('through');
-var JSONStream = require('JSONStream');
 var path = require('path');
 
 global.ws = fs.createWriteStream('out.js');
@@ -22,7 +21,7 @@ var parse_csv = function(pathname) {
     parser
         .on('readable', function() {
             if (this.lineNo === 0) { //title line
-                self.header = resolve_header(parser.read());
+                self.header = resolve_header(parser.read(), pathname);
             }
         });
     fs
@@ -30,6 +29,9 @@ var parse_csv = function(pathname) {
         .pipe(parser)
         .pipe(through(function write(data) {
             if (data !== self.header) {
+                if(pathname == 'data/surveillance_amp_suivi.csv') {
+                    debugger;
+                }
                 gen_line_obj(data, self.header, pathname);
             }
         }, function end() {
@@ -37,35 +39,36 @@ var parse_csv = function(pathname) {
         }));
 };
 
-var resolve_header = function(header) {
-    console.log('here');
+var resolve_header = function(header, pathname) {
     return header.reduce(function(pre, cur, ind, arr) {
-        var pre_copy = pre;
-        var item = {};
-        var subcat_reg = cur.match(/^\[(s|S)\](.+)$/);
-        var action_reg = cur.match(/^\[(a|A)\](.+)$/);
-        var date_reg = cur.match(/Date Limite/i);
+        var pre_copy = pre,
+            item = {'category': pathname},
+            subcat_reg = cur.match(/^\[(s|S)\](.+)$/),
+            action_reg = cur.match(/^\[(a|A)\](.+)$/),
+            date_reg = cur.match(/Date Limite/i);
         if (cur === '') {
             pre_copy.push(cur);
             return pre_copy;
         }
         if (subcat_reg) {
-            item.subcat = cur;
+            item.subcat = subcat_reg[2];
             pre_copy.push(item);
             return pre_copy;
         }
         if (action_reg) {
             var last_item = pre_copy[pre_copy.length - 1];
-            item.action = cur;
-            item.subcat = last_item.subcat;
+            item.action = action_reg[2];
+            item.subcat = last_item.subcat || null;
             pre_copy.push(item);
             return pre_copy;
         }
         if (date_reg) {
-            var last_item = pre_copy[pre_copy.length - 1];
-            item.date = cur;
+            if(!pre_copy) {
+                debugger;
+            }
+            pre_copy.push('date');
+            return pre_copy;
         }
-        console.log(pre);
     }, []);
 };
 
