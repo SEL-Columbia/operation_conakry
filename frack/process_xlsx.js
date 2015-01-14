@@ -23,4 +23,3 @@ fs.readFile('data/operation_conakry.xlsx', function(err, dat) {
         fs.writeFile('data/' + sluggify(defrench(sheet_name)) + '.csv', write_data, 'utf-8');
     });
 });
-
