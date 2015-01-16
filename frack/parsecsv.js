@@ -1,7 +1,6 @@
 var fs = require('fs');
 var csv = require('csv-streamify');
 var through = require('through');
-var JSONStream = require('JSONStream');
 var path = require('path');
 
 global.ws = fs.createWriteStream('out.js');
@@ -22,7 +21,7 @@ var parse_csv = function(pathname) {
     parser
         .on('readable', function() {
             if (this.lineNo === 0) { //title line
-                self.header = resolve_header(parser.read());
+                self.header = resolve_header(parser.read(), pathname);
             }
         });
     fs
@@ -37,41 +36,66 @@ var parse_csv = function(pathname) {
         }));
 };
 
-var resolve_header = function(header) {
-    console.log('here');
+var resolve_header = function(header, pathname) {
     return header.reduce(function(pre, cur, ind, arr) {
-        var pre_copy = pre;
-        var item = {};
-        var subcat_reg = cur.match(/^\[(s|S)\](.+)$/);
-        var action_reg = cur.match(/^\[(a|A)\](.+)$/);
-        var date_reg = cur.match(/Date Limite/i);
+        var pre_copy = pre,
+            item = {'category': pathname},
+            subcat_reg = cur.match(/^\[(s|S)\](.+)$/),
+            action_reg = cur.match(/^\[(a|A)\](.+)$/),
+            date_reg = cur.match(/Date Limite/i);
         if (cur === '') {
             pre_copy.push(cur);
             return pre_copy;
         }
         if (subcat_reg) {
-            item.subcat = cur;
+            item.subcat = subcat_reg[2];
             pre_copy.push(item);
             return pre_copy;
         }
         if (action_reg) {
             var last_item = pre_copy[pre_copy.length - 1];
-            item.action = cur;
-            item.subcat = last_item.subcat;
+            item.action = action_reg[2];
+            item.subcat = last_item.subcat || null;
             pre_copy.push(item);
             return pre_copy;
         }
         if (date_reg) {
-            var last_item = pre_copy[pre_copy.length - 1];
-            item.date = cur;
+            pre_copy.push('date');
+            return pre_copy;
         }
-        console.log(pre);
     }, []);
 };
 
 var gen_line_obj = function(line, headers, category) {
     var region = clean_region(line[0]);
-    var obj_lst = [];
+    var cat = clean_category(category);
+    var print_list = line.reduce(function(pre, cur, ind, arr) {
+        if (cur === '' || cur === '?') {
+            return pre;
+        }
+        var pre_copy = pre;
+        var cur_item = headers[ind];
+        if (cur_item === '') return pre;
+        if (cur_item !== 'date') {
+            cur_item.region = region;
+            cur_item.category = cat;
+            cur_item.value = cur;
+            pre_copy.push(cur_item);
+            return pre_copy;
+        } else {
+            var pre_item = pre_copy.pop();
+            if (!pre_item){ 
+                throw new Error('no element associates with this date' + cur);
+            }
+            pre_item.date =  cur;
+            pre_copy.push(pre_item);
+            return pre_copy;
+        }
+    },[]);
+    print_list.map(function(item) {
+        ws.write(JSON.stringify(item));
+        ws.write(',');
+    });
 };
 
 var clean_region = function(name) {
