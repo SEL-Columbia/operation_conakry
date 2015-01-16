@@ -63,9 +63,6 @@ var resolve_header = function(header, pathname) {
             return pre_copy;
         }
         if (date_reg) {
-            if(!pre_copy) {
-                debugger;
-            }
             pre_copy.push('date');
             return pre_copy;
         }
