@@ -29,9 +29,6 @@ var parse_csv = function(pathname) {
         .pipe(parser)
         .pipe(through(function write(data) {
             if (data !== self.header) {
-                if(pathname == 'data/surveillance_amp_suivi.csv') {
-                    debugger;
-                }
                 gen_line_obj(data, self.header, pathname);
             }
         }, function end() {
@@ -71,7 +68,34 @@ var resolve_header = function(header, pathname) {
 
 var gen_line_obj = function(line, headers, category) {
     var region = clean_region(line[0]);
-    var obj_lst = [];
+    var cat = clean_category(category);
+    var print_list = line.reduce(function(pre, cur, ind, arr) {
+        if (cur === '' || cur === '?') {
+            return pre;
+        }
+        var pre_copy = pre;
+        var cur_item = headers[ind];
+        if (cur_item === '') return pre;
+        if (cur_item !== 'date') {
+            cur_item.region = region;
+            cur_item.category = cat;
+            cur_item.value = cur;
+            pre_copy.push(cur_item);
+            return pre_copy;
+        } else {
+            var pre_item = pre_copy.pop();
+            if (!pre_item){ 
+                throw new Error('no element associates with this date' + cur);
+            }
+            pre_item.date =  cur;
+            pre_copy.push(pre_item);
+            return pre_copy;
+        }
+    },[]);
+    print_list.map(function(item) {
+        ws.write(JSON.stringify(item));
+        ws.write(',');
+    });
 };
 
 var clean_region = function(name) {
