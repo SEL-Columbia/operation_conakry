@@ -21,25 +21,36 @@ var parse_csv = function(pathname) {
     parser
         .on('readable', function() {
             if (this.lineNo === 0) { //title line
-                self.header = resolve_header(parser.read(), pathname);
+                self.header = parser.read();
+            } else {
+                var parsed_headers = resolve_header(self.header);
+                gen_line_obj(parser.read(), parsed_header, pathname);
             }
         });
     fs
         .createReadStream(pathname)
-        .pipe(parser)
+        .pipe(parser);
+        /*
         .pipe(through(function write(data) {
             if (data !== self.header) {
-                gen_line_obj(data, self.header, pathname);
+                gen_line_obj(data, self.parsed_header, pathname);
             }
         }, function end() {
             this.queue(null);
         }));
+        */
 };
 
-var resolve_header = function(header, pathname) {
+var trim = function(str) {
+    return str
+                .replace(/^\s\s*/, '')
+                .replace(/\s\s*$/, '');
+};
+
+var resolve_header = function(header) {
     return header.reduce(function(pre, cur, ind, arr) {
         var pre_copy = pre,
-            item = {'category': pathname},
+            item = {},
             subcat_reg = cur.match(/^\[(s|S)\](.+)$/),
             action_reg = cur.match(/^\[(a|A)\](.+)$/),
             date_reg = cur.match(/Date Limite/i);
@@ -48,13 +59,13 @@ var resolve_header = function(header, pathname) {
             return pre_copy;
         }
         if (subcat_reg) {
-            item.subcat = subcat_reg[2];
+            item.subcat = trim(subcat_reg[2]);
             pre_copy.push(item);
             return pre_copy;
         }
         if (action_reg) {
             var last_item = pre_copy[pre_copy.length - 1];
-            item.action = action_reg[2];
+            item.action = trim(action_reg[2]);
             item.subcat = last_item.subcat || null;
             pre_copy.push(item);
             return pre_copy;
@@ -70,26 +81,30 @@ var gen_line_obj = function(line, headers, category) {
     var region = clean_region(line[0]);
     var cat = clean_category(category);
     var print_list = line.reduce(function(pre, cur, ind, arr) {
-        if (cur === '' || cur === '?') {
+        if (cur === '' || 
+            cur === '?'||
+            cur.match(/^(\s)+$/)) {
             return pre;
-        }
-        var pre_copy = pre;
-        var cur_item = headers[ind];
-        if (cur_item === '') return pre;
-        if (cur_item !== 'date') {
-            cur_item.region = region;
-            cur_item.category = cat;
-            cur_item.value = cur;
-            pre_copy.push(cur_item);
-            return pre_copy;
         } else {
-            var pre_item = pre_copy.pop();
-            if (!pre_item){ 
-                throw new Error('no element associates with this date' + cur);
+            var pre_copy = pre;
+            var cur_item = headers[ind];
+            if (cur_item === '') return pre;
+            if(!cur_item) debugger;
+            if (cur_item !== 'date') {
+                cur_item.region = region;
+                cur_item.category = cat;
+                cur_item.value = cur;
+                pre_copy.push(cur_item);
+                return pre_copy;
+            } else {
+                var pre_item = pre_copy.pop();
+                if (!pre_item){ 
+                    throw new Error('no element associates with this date' + cur);
+                }
+                pre_item.date =  cur;
+                pre_copy.push(pre_item);
+                return pre_copy;
             }
-            pre_item.date =  cur;
-            pre_copy.push(pre_item);
-            return pre_copy;
         }
     },[]);
     print_list.map(function(item) {
