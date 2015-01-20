@@ -28,6 +28,7 @@ var selection = {
         matches.sort();
         others.sort();
         var results = matches.concat(others);
+        debugger;
         results = _.map(_.uniq(results), function(value) {
             return {id: value, text: value};
         });
@@ -74,7 +75,7 @@ function getFilteredData(skip) {
 function renderTable() {
     var data = getFilteredData();
     var filters = getFilters();
-    var headers = ['region', 'category', 'category2', 'category3', 'value'];
+    var headers = ['region', 'category', 'subcat', 'action', 'value'];
     var header_display = ['Préfecture', 'Catégorie', 'Sous-Catégorie', 'Action', 'valeur'];
     var html = '<table>';
 
