@@ -24,7 +24,7 @@ var parse_csv = function(pathname) {
                 self.header = parser.read();
             } else {
                 var parsed_headers = resolve_header(self.header);
-                gen_line_obj(parser.read(), parsed_header, pathname);
+                gen_line_obj(parser.read(), parsed_headers, pathname);
             }
         });
     fs

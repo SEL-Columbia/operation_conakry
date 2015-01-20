@@ -20,6 +20,8 @@ fs.readFile('data/operation_conakry.xlsx', function(err, dat) {
     var sheet_list = data.SheetNames;
     sheet_list.forEach(function(sheet_name) {
         var write_data = xlsx.utils.sheet_to_csv(data.Sheets[sheet_name]);
-        fs.writeFile('data/' + sluggify(defrench(sheet_name)) + '.csv', write_data, 'utf-8');
+        fs.writeFile('data/' + sluggify(defrench(sheet_name)) + '.csv',
+                     write_data, 
+                     'utf-8');
     });
 });
