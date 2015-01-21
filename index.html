@@ -12,23 +12,30 @@
 </head>
 
 <body>
-    <div class="filter">
-        <div class="filter__label">Préfectures</div>
-        <input type="hidden" class="filter__select js-region" data-key="region">
+    <div class="selector">
+        <div class="left-pane">
+            <div class="filter">
+                <div class="filter__label">Préfectures</div>
+                <input type="hidden" class="filter__select js-region" data-key="region">
+            </div>
+            <div class="filter">
+                <div class="filter__label">Catégorie</div>
+                <input type="hidden" class="filter__select" data-key="category">
+            </div>
+            <div class="filter">
+                <div class="filter__label">Sous-Catégorie</div>
+                <input type="hidden" class="filter__select" data-key="subcat">
+            </div>
+            <div class="filter">
+                <div class="filter__label">Action</div>
+                <input type="hidden" class="filter__select" data-key="action">
+            </div>
+        </div>
+        <div class="right-pane">
+            <div class="map js-region-map" id="map"></div>
+        </div>
     </div>
-    <div class="map js-region-map" id="map"></div>
-    <div class="filter">
-        <div class="filter__label">Catégorie</div>
-        <input type="hidden" class="filter__select" data-key="category">
-    </div>
-    <div class="filter">
-        <div class="filter__label">Sous-Catégorie</div>
-        <input type="hidden" class="filter__select" data-key="subcat">
-    </div>
-    <div class="filter">
-        <div class="filter__label">Action</div>
-        <input type="hidden" class="filter__select" data-key="action">
-    </div>
+
 
     
     <div class="table">

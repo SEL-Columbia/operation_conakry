@@ -1,12 +1,23 @@
 body {
-    background: rgba(0,0,0,0.9);
-    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.9);
+    color: rgba(0,0,0,0.6);
     font-size: 15px;
     font-family: Lucida, 'Helvetica Neue', Helvetica, sans-serif;
     padding: 20px 25px 50px;
     line-height: 1.5;
 }
 
+.selector {
+    width: 100%;
+}
+.left-pane {
+    width: 40%;
+    float: left;
+}
+.right-pane {
+    width: 60%;
+    float: left;
+}
 
 .filter {
     padding: 15px 0;
@@ -19,7 +30,7 @@ body {
 }
 .filter__select {
     width: 60%;
-    max-width: 350px;
+    max-width: 400px;
 }
 
 .select2-drop {
@@ -28,7 +39,7 @@ body {
 }
 .select2-choices {
     padding: 5px !important;
-    background: rgba(0,0,0,0.3) !important;
+    background: rgba(0,0,0,0.1) !important;
     border: none !important;
     border-radius: 4px;
 }
@@ -44,21 +55,20 @@ body {
 }
 
 #map {
-    margin-left: 120px;
-    width: 60%;
     max-width: 350px;
-    height: 290px;
-    margin-top; 20px;
+    height: 280px;
+    margin-top: 15px;
 }
 
 .table {
+    float: left;
     text-align: left;
     margin-top: 40px;
 }
 
 .table th {
     padding: 10px 0;
-    padding right: 20px;
+    padding-right: 20px;
     vertical-align: bottom;
 }
 .table td {
