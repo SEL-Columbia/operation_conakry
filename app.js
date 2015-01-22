@@ -74,8 +74,8 @@ function getFilteredData(skip) {
 function renderTable() {
     var data = getFilteredData();
     var filters = getFilters();
-    var headers = ['region', 'category', 'subcat', 'action', 'value'];
-    var header_display = ['Préfecture', 'Catégorie', 'Sous-Catégorie', 'Action', 'Valeur'];
+    var headers = ['region', 'category', 'subcat', 'action', 'value', 'date'];
+    var header_display = ['Préfecture', 'Catégorie', 'Sous-Catégorie', 'Action', 'Valeur', 'Date limite'];
     var html = '<table>';
 
     // Add headers
