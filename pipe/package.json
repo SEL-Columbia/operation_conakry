@@ -10,12 +10,12 @@
   "author": "myf",
   "license": "ISC",
   "dependencies": {
+    "JSONStream": "^0.10.0",
     "csv-parser": "^1.5.0",
     "csv-streamify": "^1.0.0",
     "lodash": "^2.4.1",
     "node-xlsx": "^0.5.1",
     "through": "^2.3.6",
-    "through2": "^0.6.3",
     "xlsx": "^0.7.12"
   }
 }

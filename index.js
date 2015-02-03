@@ -81,8 +81,8 @@ function getFilteredData(skip) {
 function renderTable() {
     var data = getFilteredData();
     var filters = getFilters();
-    var headers = ['region', 'category', 'subcat', 'action', 'value', 'date'];
-    var header_display = ['Préfecture', 'Catégorie', 'Sous-Catégorie', 'Action', 'Valeur', 'Date limite'];
+    var headers = ['region', 'sector', 'activity_type', 'x_activity', 'org', 'from_date' , 'to_date'];
+    var header_display = ["Préfecture", "Secteur", "Type D'activité", "Activité", "Organisation", "Date de Début", "Date de Fin"];
     var html = '<table>';
 
     // Add headers
@@ -186,7 +186,6 @@ Map.prototype.render = function() {
         }
     });
 };
-
 
 var guinea_map = new Map();
 
