@@ -1,5 +1,12 @@
-L.Icon.Default.imagePath = 'leaflet/images/';
+var geojson = require('./guinea_prefecture');
+var data =require('./data');
+var $ = require('jquery');
+var _ = require('underscore');
+var select2 = require('select2');
+var L = require('leaflet');
+L.Icon.Default.imagePath = 'node_modules/leaflet/images/';
 // Initialize multi select
+
 var selection = {
     multiple: true,
     initSelection: function (element, callback) {
@@ -74,8 +81,8 @@ function getFilteredData(skip) {
 function renderTable() {
     var data = getFilteredData();
     var filters = getFilters();
-    var headers = ['region', 'category', 'subcat', 'action', 'value', 'date'];
-    var header_display = ['Préfecture', 'Catégorie', 'Sous-Catégorie', 'Action', 'Valeur', 'Date limite'];
+    var headers = ['region', 'sector', 'activity_type', 'x_activity', 'org', 'from_date' , 'to_date'];
+    var header_display = ["Préfecture", "Secteur", "Type D'activité", "Activité", "Organisation", "Date de Début", "Date de Fin"];
     var html = '<table>';
 
     // Add headers
